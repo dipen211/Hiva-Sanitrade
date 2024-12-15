@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Hiva-Sanitrade/static/css/main.5f2270b6.css",
-    "main.js": "/Hiva-Sanitrade/static/js/main.053006bf.js",
+    "main.js": "/Hiva-Sanitrade/static/js/main.27788a46.js",
     "static/js/453.dd0ebc8a.chunk.js": "/Hiva-Sanitrade/static/js/453.dd0ebc8a.chunk.js",
     "index.html": "/Hiva-Sanitrade/index.html",
     "main.5f2270b6.css.map": "/Hiva-Sanitrade/static/css/main.5f2270b6.css.map",
-    "main.053006bf.js.map": "/Hiva-Sanitrade/static/js/main.053006bf.js.map",
+    "main.27788a46.js.map": "/Hiva-Sanitrade/static/js/main.27788a46.js.map",
     "453.dd0ebc8a.chunk.js.map": "/Hiva-Sanitrade/static/js/453.dd0ebc8a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f2270b6.css",
-    "static/js/main.053006bf.js"
+    "static/js/main.27788a46.js"
   ]
 }
