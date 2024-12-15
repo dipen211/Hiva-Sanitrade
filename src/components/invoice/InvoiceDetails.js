@@ -66,7 +66,7 @@ const InvoiceDetails = () => {
     async function fetchData() {
         try {
             console.log(id)
-            const response = await axios.get(`https://billingservice-wq93.onrender.com//api/invoice/${id}`);
+            const response = await axios.get(`https://billingservice-wq93.onrender.com/api/invoice/${id}`);
             setConfig({
                 ...config,
                 items: response.data.items,

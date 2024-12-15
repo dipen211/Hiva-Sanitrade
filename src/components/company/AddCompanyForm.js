@@ -87,7 +87,7 @@ const AddCompanyForm = () => {
         try {
             let response;
             if (companyData) {
-                response = await fetch(`https://billingservice-wq93.onrender.com//api/products/${companyData._id}`, {
+                response = await fetch(`https://billingservice-wq93.onrender.com/api/products/${companyData._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const AddCompanyForm = () => {
                     body: JSON.stringify(productData),
                 });
             } else {
-                response = await fetch('https://billingservice-wq93.onrender.com//api/products', {
+                response = await fetch('https://billingservice-wq93.onrender.com/api/products', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
