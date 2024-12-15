@@ -18,7 +18,7 @@ const CompanyList = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/products');
+        const response = await axios.get('https://billingservice-wq93.onrender.com//api/products');
         setCompanies(response.data);
         setLoading(false);
       } catch (error) {
@@ -59,7 +59,7 @@ const CompanyList = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/products/${companyToDelete}`);
+      await axios.delete(`https://billingservice-wq93.onrender.com//api/products/${companyToDelete}`);
 
       setCompanies(companies.filter(company => company._id !== companyToDelete));
       handleCloseDeleteModal();

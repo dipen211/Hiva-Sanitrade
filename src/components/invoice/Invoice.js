@@ -62,7 +62,7 @@ const Invoice = () => {
 
     async function fetchData() {
         try {
-            const response = await axios.get('http://localhost:3001/api/cart');
+            const response = await axios.get('https://billingservice-wq93.onrender.com//api/cart');
             setItems(response.data);
         } catch (error) {
             console.error("Error fetching cart items:", error);
@@ -79,7 +79,7 @@ const Invoice = () => {
 
     async function handleRowDel(item) {
         try {
-            const response = await axios.delete(`http://localhost:3001/api/cart/${item._id}`);
+            const response = await axios.delete(`https://billingservice-wq93.onrender.com//api/cart/${item._id}`);
             console.log(response.data);
         } catch (error) {
             console.error("Error deleting cart item:", error);
@@ -116,7 +116,7 @@ const Invoice = () => {
             billTo: config.billTo,
             toMobile: config.toMobile,
         };
-        await fetch('http://localhost:3001/api/invoice', {
+        await fetch('https://billingservice-wq93.onrender.com//api/invoice', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const Invoice = () => {
             .then(res => res.json())
             .then(json => {
                 try {
-                    axios.delete(`http://localhost:3001/api/cart`);
+                    axios.delete(`https://billingservice-wq93.onrender.com//api/cart`);
                 } catch (error) { }
                 const url = `${window.location.origin}/invoice/your-invoice/${json._id}`
                 const shareUrl = `https://api.whatsapp.com/send?phone=918140210375&text=${url}`;

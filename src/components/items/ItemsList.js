@@ -23,7 +23,7 @@ const CompanyPage = () => {
                 quantity: 1,
                 image: item.image,
             }
-            await axios.post('http://localhost:3001/api/cart', data);
+            await axios.post('https://billingservice-wq93.onrender.com//api/cart', data);
         } catch (error) {
             console.error('Error adding item to cart:', error);
             alert('Failed to add item to cart');

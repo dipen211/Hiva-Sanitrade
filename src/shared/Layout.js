@@ -10,7 +10,7 @@ const Layout = (props) => {
 
     const fetchCartItems = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/api/cart');
+            const response = await axios.get('https://billingservice-wq93.onrender.com//api/cart');
             setCartItemCount(response.data.length);
         } catch (error) {
             console.error("Error fetching cart items:", error);
