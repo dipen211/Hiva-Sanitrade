@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Button, IconButton, Box, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, CircularProgress, Modal, Typography, Button as MuiButton } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  IconButton,
+  CircularProgress,
+  Modal,
+  Grid,
+} from '@mui/material';
 import { RemoveRedEye as EyeIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './CompanyList.css';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const CompanyList = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [companyToDelete, setCompanyToDelete] = useState(null);
 
@@ -30,32 +42,19 @@ const CompanyList = () => {
     fetchCompanies();
   }, []);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-
   const handleAddCompany = () => {
     navigate('/add-company');
   };
-
 
   const handleDeleteClick = (companyId) => {
     setCompanyToDelete(companyId);
     setOpenDeleteModal(true);
   };
 
-
   const handleCloseDeleteModal = () => {
     setOpenDeleteModal(false);
     setCompanyToDelete(null);
   };
-
 
   const handleConfirmDelete = async () => {
     try {
@@ -68,77 +67,65 @@ const CompanyList = () => {
       handleCloseDeleteModal();
     }
   };
+
   const handleEditClick = (company) => {
     navigate('/add-company', { state: { company } });
   };
-
   
   const handleViewClick = (company) => {
     navigate('/company', { state: { company } });
   };
+
   return (
     <Box sx={{ padding: 3 }}>
       <Button
         variant="contained"
         color="primary"
         onClick={handleAddCompany}
-        sx={{ marginBottom: 2 }}
+        sx={{
+          marginBottom: 2,
+          width: isMobile ? '100%' : 'auto',
+        }}
       >
         Add Company
       </Button>
 
-      <Table sx={{ minWidth: 650 }} aria-label="company table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Company</TableCell>
-            <TableCell>Items</TableCell>
-            <TableCell align="center">Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
           {loading ? (
-            <TableRow>
-              <TableCell colSpan={4} align="center">
+        <Box sx={{ textAlign: 'center', marginTop: 4 }}>
                 <CircularProgress />
-              </TableCell>
-            </TableRow>
+        </Box>
           ) : (
-            companies
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((company) => (
-                <TableRow key={company._id}>
-                  <TableCell>{company.name}</TableCell>
-                  <TableCell>{company.items && company.items.length}</TableCell>
-                  <TableCell align="center">
+        <Grid container spacing={3}>
+          {companies.map((company) => (
+            <Grid item xs={12} sm={6} md={4} key={company._id}>
+              <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <CardContent>
+                  <Typography variant="h6" component="div" gutterBottom>
+                    {company.name}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Items: {company.items && company.items.length}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ marginTop: 'auto', justifyContent: 'space-between' }}>
                     <IconButton onClick={() => handleViewClick(company)} color="primary">
                       <EyeIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleEditClick(company)} color="success" sx={{ marginLeft: '8px' }}>
+                  <IconButton onClick={() => handleEditClick(company)} color="success">
                       <EditIcon />
                     </IconButton>
                     <IconButton
                       color="error"
-                      sx={{ marginLeft: '8px' }}
                       onClick={() => handleDeleteClick(company._id)}
                     >
                       <DeleteIcon />
                     </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-          )}
-        </TableBody>
-      </Table>
-
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={companies.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
 
       <Modal
         open={openDeleteModal}
@@ -155,7 +142,7 @@ const CompanyList = () => {
             backgroundColor: 'white',
             padding: 3,
             borderRadius: 2,
-            width: 300,
+            width: isMobile ? '90%' : 300,
             textAlign: 'center',
           }}
         >
@@ -163,12 +150,12 @@ const CompanyList = () => {
             Are you sure you want to delete this company?
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <MuiButton onClick={handleCloseDeleteModal} color="primary">
+            <Button onClick={handleCloseDeleteModal} color="primary">
               Cancel
-            </MuiButton>
-            <MuiButton onClick={handleConfirmDelete} color="error">
+            </Button>
+            <Button onClick={handleConfirmDelete} color="error">
               Confirm Delete
-            </MuiButton>
+            </Button>
           </Box>
         </Box>
       </Modal>

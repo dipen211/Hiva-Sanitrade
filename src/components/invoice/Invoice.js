@@ -337,19 +337,19 @@ const Invoice = () => {
                             fullWidth
                             variant="contained"
                             color="success"
-                            onClick={() => navigate("/item")}
+                            onClick={() => navigate("/")}
                             sx={{ mb: 2 }}
                         >
-                            Back To List
+                            Back To Company List
                         </Button>
-                        <Button
+                        {/* <Button
                             fullWidth
                             variant="contained"
                             color="error"
                             sx={{ mb: 2 }}
                         >
                             Clear All Items
-                        </Button>
+                        </Button> */}
                         <Button
                             fullWidth
                             variant="contained"

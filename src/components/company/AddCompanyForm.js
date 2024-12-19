@@ -253,7 +253,7 @@ const AddCompanyForm = () => {
                 >
                     <img
                         src={currentImage}
-                        alt="Uploaded Image"
+                        alt="UploadedImage"
                         style={{
                             width: '100%',
                             height: 'auto',

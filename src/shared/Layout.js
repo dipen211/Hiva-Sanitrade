@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, AppBar, Toolbar, Typography, IconButton, Container, Badge } from "@mui/material";
-import { Menu as MenuIcon, ShoppingCart as ShoppingCartIcon } from "@mui/icons-material";
+import { ShoppingCart as ShoppingCartIcon } from "@mui/icons-material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -22,25 +22,17 @@ const Layout = (props) => {
         fetchCartItems();
     }, []);
 
-    const handleCart = () => {
-        navigate('/invoice');
-    };
-
     return (
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="sticky">
                     <Toolbar className='d-flex'>
-                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                            <MenuIcon />
-                        </IconButton>
-
-                        <Typography className="d-flex" variant="h6" sx={{ flexGrow: 1 }}>
+                        <Typography className="d-flex" variant="h6" sx={{ flexGrow: 1 }} onClick={()=>navigate('/')}>
                                 <img src="/images/hiva.png" alt="Logo" style={{ height: 40, marginRight: 8, alignItems: 'center' }} />
                                 <span style={{ fontSize: '25px' }}>HIVA</span>
                         </Typography>
 
-                        <IconButton color="inherit" onClick={() => handleCart()}>
+                        <IconButton color="inherit" onClick={() => navigate('/invoice')}>
                             <Badge badgeContent={cartItemCount} color="error">
                                 <ShoppingCartIcon />
                             </Badge>

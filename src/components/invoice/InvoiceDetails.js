@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Grid, Box, Typography, TextField, Card, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Grid, Box, Typography, Card, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -106,44 +106,22 @@ const InvoiceDetails = () => {
                         <Box mt={2}>
                             <Grid container spacing={3}>
                                 {/* Bill From */}
-                                <Grid item xs={12} md={6}>
-                                    <TextField
-                                        label="Bill From"
-                                        fullWidth
-                                        value="Keval Shah"
-                                        disabled
-                                    />
-                                    <TextField
-                                        label="Email"
-                                        fullWidth
-                                        value="keval.shah@gmail.com"
-                                        disabled
-                                        sx={{ mt: 2 }}
-                                    />
-                                    <TextField
-                                        label="Mobile"
-                                        fullWidth
-                                        value="+91-8140210375"
-                                        disabled
-                                        sx={{ mt: 2 }}
-                                    />
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                        <strong>Bill From</strong>
+                                    </Typography>
+                                    <Typography variant="body1"><b>Name:</b> Keval Shah</Typography>
+                                    <Typography variant="body1"><b>Email:</b> keval.shah@gmail.com</Typography>
+                                    <Typography variant="body1"><b>Phone:</b> +91-8140210375</Typography>
                                 </Grid>
 
                                 {/* Bill To */}
-                                <Grid item xs={12} md={6}>
-                                    <TextField
-                                        label="Bill To"
-                                        fullWidth
-                                        value={config.billTo}
-                                        disabled
-                                    />
-                                    <TextField
-                                        label="Mobile"
-                                        fullWidth
-                                        value={config.toMobile}
-                                        disabled
-                                        sx={{ mt: 2 }}
-                                    />
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                        <strong>Bill To</strong>
+                                    </Typography>
+                                    <Typography variant="body1"><b>Name:</b> {config.billTo}</Typography>
+                                    <Typography variant="body1"><b>Phone:</b> {config.toMobile}</Typography>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -154,7 +132,6 @@ const InvoiceDetails = () => {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Item ID</TableCell>
                                             <TableCell>Name</TableCell>
                                             <TableCell>Price</TableCell>
                                             <TableCell>Quantity</TableCell>
@@ -164,7 +141,6 @@ const InvoiceDetails = () => {
                                     <TableBody>
                                         {config.items.map((item, index) => (
                                             <TableRow key={index}>
-                                                <TableCell>{index + 1}</TableCell>
                                                 <TableCell>
                                                     {item.companyName} {item.productName}
                                                 </TableCell>
@@ -214,14 +190,12 @@ const InvoiceDetails = () => {
                         </Box>
 
                         <Box mt={3}>
-                            <TextField
-                                label="Notes"
-                                fullWidth
-                                multiline
-                                rows={2}
-                                value="Thank you for doing business with us!"
-                                disabled
-                            />
+                            <Typography variant="subtitle1" gutterBottom>
+                                Notes
+                            </Typography>
+                            <Typography variant="body2">
+                                Thank you for doing business with us!
+                            </Typography>
                         </Box>
                     </Card>
                 </Grid>
