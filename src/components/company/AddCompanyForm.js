@@ -49,7 +49,7 @@ const AddCompanyForm = () => {
             setLoading(true)
             // Send the request to Cloudinary
             const response = await axios.post(
-                `https://api.x.com/v1_1/dzsxyuits/image/upload`, // Replace 'your-cloud-name' with your Cloudinary cloud name
+                `https://api.cloudinary.com/v1_1/dzsxyuits/image/upload`, // Replace 'your-cloud-name' with your Cloudinary cloud name
                 formData
             );
 
