@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, AppBar, Toolbar, Typography, IconButton, Container, Badge } from "@mui/material";
 import { Menu as MenuIcon, ShoppingCart as ShoppingCartIcon } from "@mui/icons-material";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Layout = (props) => {
     const navigate = useNavigate();
@@ -35,11 +35,9 @@ const Layout = (props) => {
                             <MenuIcon />
                         </IconButton>
 
-                        <Typography  variant="h6" sx={{ flexGrow: 1 }}>
-                            <Link to="/" className='d-flex' style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <img src="/images/hiva-logo.png" alt="Logo" style={{ height: 40, marginRight: 8, alignItems: 'center' }} />
+                        <Typography className="d-flex" variant="h6" sx={{ flexGrow: 1 }}>
+                                <img src="/images/hiva.png" alt="Logo" style={{ height: 40, marginRight: 8, alignItems: 'center' }} />
                                 <span style={{ fontSize: '25px' }}>HIVA</span>
-                            </Link>
                         </Typography>
 
                         <IconButton color="inherit" onClick={() => handleCart()}>

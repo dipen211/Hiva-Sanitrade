@@ -24,6 +24,10 @@
   color: white;
 }
 
+.d-flex {
+  display: flex;
+}
+
 .App-link {
   color: #61dafb;
 }
