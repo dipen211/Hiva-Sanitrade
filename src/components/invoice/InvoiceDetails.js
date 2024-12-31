@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Grid, Box, Typography, Card, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Grid, Box, Typography, Card, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Modal, IconButton } from "@mui/material";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { Close as CloseIcon, GetApp as DownloadIcon } from "@mui/icons-material";
+import html2pdf from "html2pdf.js";  // Import html2pdf.js
+import './InvoiceDetails.css';
+import apiService from "../../ApiService";
 
 const InvoiceDetails = () => {
     const { id } = useParams();
@@ -22,6 +25,18 @@ const InvoiceDetails = () => {
         createdDate: '',
         items: []
     });
+
+    const [openImageModal, setOpenImageModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+
+    const handleImageClick = (imageUrl) => {
+        setSelectedImage(imageUrl);
+        setOpenImageModal(true);
+    };
+
+    const handleCloseImageModal = () => {
+        setOpenImageModal(false);
+    };
 
     const handleCalculateTotal = useCallback(() => {
         let subTotal = 0;
@@ -56,8 +71,8 @@ const InvoiceDetails = () => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0'); // Adds leading zero if day is less than 10
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
 
         return `${day}/${month}/${year}`;
@@ -65,16 +80,15 @@ const InvoiceDetails = () => {
 
     async function fetchData() {
         try {
-            console.log(id)
-            const response = await axios.get(`https://billingservice-wq93.onrender.com/api/invoice/${id}`);
+            const response = await apiService.get(`invoice/${id}`);
             setConfig({
                 ...config,
-                items: response.data.items,
-                billTo: response.data.billTo,
-                discountRate: response.data.discountRate,
-                taxRate: response.data.taxRate,
-                toMobile: response.data.toMobile,
-                createdDate: formatDate(response.data.createdAt),
+                items: response.items,
+                billTo: response.billTo,
+                discountRate: response.discountRate,
+                taxRate: response.taxRate,
+                toMobile: response.toMobile,
+                createdDate: formatDate(response.createdAt),
             });
         } catch (error) {
             console.error("Error fetching cart items:", error);
@@ -89,16 +103,38 @@ const InvoiceDetails = () => {
         handleCalculateTotal();
     }, [config.items, config.taxRate, config.discountRate]);
 
+    const handleDownloadPDF = () => {
+        const element = document.getElementById("invoice-content");
+    
+        const options = {
+            margin: 10,
+            filename: "invoice.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: {
+                scale: 2, // Higher scale ensures better quality for images
+                logging: true,
+                useCORS: true, // Ensure cross-origin images are handled
+            },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        };
+    
+        html2pdf()
+            .from(element)
+            .set(options)
+            .save();
+    };
+    
+
     return (
-        <Box sx={{ padding: 3 }}>
+        <Box id='invoice-content'>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Card sx={{ padding: 3 }}>
-                        <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Card className="invoice-card">
+                        <Box className="invoice-header">
                             <Typography variant="h6" color="textPrimary">
                                 Invoice
                             </Typography>
-                            <Typography variant="body2" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary" className="invoice-created-date">
                                 {config.createdDate}
                             </Typography>
                         </Box>
@@ -127,7 +163,7 @@ const InvoiceDetails = () => {
                         </Box>
 
                         {/* Table for displaying items */}
-                        <Box mt={4}>
+                        <Box className="table-container">
                             <TableContainer>
                                 <Table>
                                     <TableHead>
@@ -147,7 +183,12 @@ const InvoiceDetails = () => {
                                                 <TableCell>{item.price} ₹</TableCell>
                                                 <TableCell>{item.quantity}</TableCell>
                                                 <TableCell>
-                                                    <img src={item.image} alt={item.productName} width={50} />
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.productName}
+                                                        className="table-img"
+                                                        onClick={() => handleImageClick(item.image)}
+                                                    />
                                                 </TableCell>
                                             </TableRow>
                                         ))}
@@ -160,26 +201,26 @@ const InvoiceDetails = () => {
                         <Box mt={4}>
                             <Grid container justifyContent="flex-end">
                                 <Grid item xs={12} md={6}>
-                                    <Box display="flex" justifyContent="space-between" mb={1}>
+                                    <Box className="subtotal-row">
                                         <Typography variant="body1">Subtotal:</Typography>
                                         <Typography variant="body1">
                                             {config.currency} {config.subTotal}
                                         </Typography>
                                     </Box>
-                                    <Box display="flex" justifyContent="space-between" mb={1}>
+                                    <Box className="subtotal-row">
                                         <Typography variant="body1">Discount({config.discountRate}%):</Typography>
                                         <Typography variant="body1">
                                             {config.currency} {config.discountAmmount}
                                         </Typography>
                                     </Box>
-                                    <Box display="flex" justifyContent="space-between" mb={1}>
+                                    <Box className="subtotal-row">
                                         <Typography variant="body1">Tax({config.taxRate}%):</Typography>
                                         <Typography variant="body1">
                                             {config.currency} {config.taxAmmount}
                                         </Typography>
                                     </Box>
                                     <Divider />
-                                    <Box display="flex" justifyContent="space-between" mt={2}>
+                                    <Box className="total-row">
                                         <Typography variant="h6">Total:</Typography>
                                         <Typography variant="h6">
                                             {config.currency} {config.total}
@@ -189,7 +230,7 @@ const InvoiceDetails = () => {
                             </Grid>
                         </Box>
 
-                        <Box mt={3}>
+                        <Box className="notes">
                             <Typography variant="subtitle1" gutterBottom>
                                 Notes
                             </Typography>
@@ -200,8 +241,39 @@ const InvoiceDetails = () => {
                     </Card>
                 </Grid>
             </Grid>
+
+            {/* Modal to view the image */}
+            <Modal
+                open={openImageModal}
+                onClose={handleCloseImageModal}
+                className="modal-container"
+            >
+                <Box className="modal-box">
+                    {/* Close Icon */}
+                    <IconButton
+                        onClick={handleCloseImageModal}
+                        className="close-button"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+
+                    {/* Image */}
+                    <img
+                        src={selectedImage}
+                        alt="Product"
+                        className="modal-image"
+                    />
+                </Box>
+            </Modal>
+
+            <IconButton
+                onClick={handleDownloadPDF}
+                className="download-button"
+            >
+                <DownloadIcon />
+            </IconButton>
         </Box>
     );
-}
+};
 
 export default InvoiceDetails;

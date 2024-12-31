@@ -1,0 +1,89 @@
+/* AppBar */
+.app-bar {
+    background-color: #1976d2;
+    padding: 0 16px;
+}
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo Section */
+.logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.logo {
+    height: 40px;
+}
+
+.logo-text {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Menu Icon */
+.menu-icon-container {
+    display: none;
+}
+
+/* Menu */
+.menu {
+    margin-top: 8px;
+}
+
+.menu-item {
+    padding: 8px 16px;
+    font-size: 16px;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Buttons */
+.nav-button {
+    font-weight: bold;
+    text-transform: none;
+}
+
+.logout-button {
+    font-weight: bold;
+    text-transform: none;
+    border-color: white;
+    transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Content Container */
+.content-container {
+    padding: 16px;
+    margin-top: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .menu-icon-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .button-container {
+        display: none;
+    }
+}

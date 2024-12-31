@@ -1,0 +1,87 @@
+.invoice-card {
+  padding: 24px;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.invoice-created-date {
+  color: #757575;
+}
+
+.table-container {
+  margin-top: 32px;
+}
+
+.table-img {
+  cursor: pointer;
+  width: 50px;
+}
+
+.subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.notes {
+  margin-top: 24px;
+}
+
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-box {
+  background-color: white;
+  padding: 24px;
+  width: 90%;
+  height: 90%;
+  max-width: 600px;
+  max-height: 80%;
+  overflow: hidden;
+  box-shadow: 24;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.close-button {
+  position: absolute !important;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  color: black !important;
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.download-button {
+  position: fixed!important;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2196f3!important;
+  color: white!important;
+  border-radius: 50%!important;
+  padding: 16px!important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  cursor: pointer!important;
+}

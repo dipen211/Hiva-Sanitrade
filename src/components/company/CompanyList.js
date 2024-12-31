@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import { RemoveRedEye as EyeIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import apiService from '../../ApiService';
 
 const CompanyList = () => {
   const navigate = useNavigate();
@@ -30,8 +30,8 @@ const CompanyList = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('https://billingservice-wq93.onrender.com/api/products');
-        setCompanies(response.data);
+        const response = await apiService.get("products");
+        setCompanies(response);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching companies:', error);
@@ -58,8 +58,7 @@ const CompanyList = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`https://billingservice-wq93.onrender.com/api/products/${companyToDelete}`);
-
+      await apiService.delete(`products/${companyToDelete}`);
       setCompanies(companies.filter(company => company._id !== companyToDelete));
       handleCloseDeleteModal();
     } catch (error) {
@@ -69,11 +68,11 @@ const CompanyList = () => {
   };
 
   const handleEditClick = (company) => {
-    navigate('/add-company', { state: { company } });
+    navigate(`/add-company`, { state: { company } });
   };
-  
+
   const handleViewClick = (company) => {
-    navigate('/company', { state: { company } });
+    navigate(`/company/${company._id}`);
   };
 
   return (
@@ -90,11 +89,11 @@ const CompanyList = () => {
         Add Company
       </Button>
 
-          {loading ? (
+      {loading ? (
         <Box sx={{ textAlign: 'center', marginTop: 4 }}>
-                <CircularProgress />
+          <CircularProgress />
         </Box>
-          ) : (
+      ) : (
         <Grid container spacing={3}>
           {companies.map((company) => (
             <Grid item xs={12} sm={6} md={4} key={company._id}>
@@ -108,18 +107,18 @@ const CompanyList = () => {
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ marginTop: 'auto', justifyContent: 'space-between' }}>
-                    <IconButton onClick={() => handleViewClick(company)} color="primary">
-                      <EyeIcon />
-                    </IconButton>
+                  <IconButton onClick={() => handleViewClick(company)} color="primary">
+                    <EyeIcon />
+                  </IconButton>
                   <IconButton onClick={() => handleEditClick(company)} color="success">
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      onClick={() => handleDeleteClick(company._id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDeleteClick(company._id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </CardActions>
               </Card>
             </Grid>

@@ -1,40 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Grid, IconButton, Modal } from '@mui/material';
+import { TextField, Button, Box, Typography, Grid, IconButton, Modal, CircularProgress } from '@mui/material';
 import { AddCircle as AddCircleIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import apiService from '../../ApiService';
 
 const AddCompanyForm = () => {
     const [companyName, setCompanyName] = useState('');
-    const [items, setItems] = useState([{ name: '', price: '', image: '' }]);
+    const [items, setItems] = useState();
+    const [newItems, setNewItems] = useState([{ name: '', price: '', image: '' }]);
     const [openModal, setOpenModal] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const companyData = location.state?.company; // Access company data passed from CompanyList
+    const companyData = location.state?.company;
 
-    // Prefill form if editing an existing company
     useEffect(() => {
         if (companyData) {
             setCompanyName(companyData.name);
-            setItems(companyData.items || [{ name: '', price: '', image: '' }]);
+            setItems(companyData.items);
         }
     }, [companyData]);
 
     const handleAddItem = () => {
-        setItems([...items, { name: '', price: '', image: '' }]);
+        setNewItems([...newItems, { name: '', price: '', image: '' }]);
     };
 
     const handleRemoveItem = (index) => {
-        const updatedItems = items.filter((_, i) => i !== index);
-        setItems(updatedItems);
+        const updatedItems = newItems.filter((_, i) => i !== index);
+        setNewItems(updatedItems);
     };
 
     const handleItemChange = (index, field, value) => {
-        const updatedItems = [...items];
+        const updatedItems = [...newItems];
         updatedItems[index][field] = value;
-        setItems(updatedItems);
+        setNewItems(updatedItems);
     };
 
     const handleImageUpload = async (index, event) => {
@@ -43,20 +44,20 @@ const AddCompanyForm = () => {
 
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', "Company's-Items"); // Replace with your Cloudinary upload preset
+        formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PERSET);
 
         try {
             setLoading(true)
             // Send the request to Cloudinary
             const response = await axios.post(
-                `https://api.cloudinary.com/v1_1/dzsxyuits/image/upload`, // Replace 'your-cloud-name' with your Cloudinary cloud name
+                `${process.env.REACT_APP_CLOUDINARY_URL}upload`,
                 formData
             );
 
             const imageUrl = response.data.secure_url;
-            const updatedItems = [...items];
+            const updatedItems = [...newItems];
             updatedItems[index].image = imageUrl;
-            setItems(updatedItems);
+            setNewItems(updatedItems);
 
             setLoading(false)
         } catch (error) {
@@ -81,30 +82,18 @@ const AddCompanyForm = () => {
 
         const productData = {
             name: companyName,
-            items: items,
+            items: items && items.length > 0 ? [...items, ...newItems] : newItems,
         };
 
         try {
             let response;
             if (companyData) {
-                response = await fetch(`https://billingservice-wq93.onrender.com/api/products/${companyData._id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(productData),
-                });
+                response = await apiService.put(`products/${companyData._id}`, productData);
             } else {
-                response = await fetch('https://billingservice-wq93.onrender.com/api/products', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(productData),
-                });
+                response = await apiService.post("products", productData);
             }
 
-            if (response.ok) {
+            if (response) {
                 navigate('/');
             } else {
                 console.error('Error creating/updating product:', response.statusText);
@@ -128,7 +117,7 @@ const AddCompanyForm = () => {
                     onChange={(e) => setCompanyName(e.target.value)}
                     sx={{ marginBottom: 2 }}
                 />
-                {items.map((item, index) => (
+                {newItems.map((item, index) => (
                     <Grid container spacing={2} key={index} sx={{ marginBottom: 2 }}>
                         <Grid item xs={6}>
                             <Typography variant="h6" sx={{ marginBottom: 2 }}>
@@ -207,9 +196,10 @@ const AddCompanyForm = () => {
                                         </Button>
                                     </>
                                 ) : (
-                                    <Typography variant="body2" color="textSecondary">
-                                        Click or drag to upload an image
-                                    </Typography>
+                                    loading ? <CircularProgress /> :
+                                        <Typography variant="body2" color="textSecondary">
+                                            Click or drag to upload an image
+                                        </Typography>
                                 )}
                                 <input
                                     type="file"

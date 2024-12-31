@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Grid, Box, Typography, Button, TextField, InputAdornment, Card, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Delete as DeleteIcon } from '@mui/icons-material';
-import axios from "axios";
+import apiService from "../../ApiService";
 
 const Invoice = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [config, setConfig] = useState({
@@ -61,11 +62,27 @@ const Invoice = () => {
     }, [config, items]);
 
     async function fetchData() {
-        try {
-            const response = await axios.get('https://billingservice-wq93.onrender.com/api/cart');
-            setItems(response.data);
-        } catch (error) {
-            console.error("Error fetching cart items:", error);
+        if (id) {
+            try {
+                const response = await apiService.get(`invoice/${id}`);
+                setItems(response.items)
+                setConfig({
+                    ...config,
+                    billTo: response.billTo,
+                    discountRate: response.discountRate,
+                    taxRate: response.taxRate,
+                    toMobile: response.toMobile,
+                });
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+            }
+        } else {
+            try {
+                const response = await apiService.get('cart');
+                setItems(response);
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+            }
         }
     }
 
@@ -79,8 +96,7 @@ const Invoice = () => {
 
     async function handleRowDel(item) {
         try {
-            const response = await axios.delete(`https://billingservice-wq93.onrender.com/api/cart/${item._id}`);
-            console.log(response.data);
+            await apiService.delete(`cart/${item._id}`);
         } catch (error) {
             console.error("Error deleting cart item:", error);
         }
@@ -106,7 +122,6 @@ const Invoice = () => {
 
     const sendInvoice = async (event) => {
         if (!validateFields()) {
-            console.log(errors)
             return
         }
         const invoiceData = {
@@ -116,20 +131,14 @@ const Invoice = () => {
             billTo: config.billTo,
             toMobile: config.toMobile,
         };
-        await fetch('https://billingservice-wq93.onrender.com/api/invoice', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(invoiceData),
-        })
+        await apiService.post("/invoice", invoiceData)
             .then(res => res.json())
             .then(json => {
                 try {
-                    axios.delete(`https://billingservice-wq93.onrender.com/api/cart`);
+                    apiService.delete('cart');
                 } catch (error) { }
                 const url = `${window.location.origin}/invoice/your-invoice/${json._id}`
-                const shareUrl = `https://api.whatsapp.com/send?phone=918140210375&text=${url}`;
+                const shareUrl = `https://api.whatsapp.com/send?phone=${config.toMobile}&text=${url}`;
                 window.open(shareUrl, "_blank");
             }).catch((e) => { })
     };
