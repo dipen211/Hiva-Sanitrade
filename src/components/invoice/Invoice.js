@@ -131,16 +131,13 @@ const Invoice = () => {
             billTo: config.billTo,
             toMobile: config.toMobile,
         };
-        await apiService.post("/invoice", invoiceData)
-            .then(res => res.json())
-            .then(json => {
-                try {
-                    apiService.delete('cart');
-                } catch (error) { }
-                const url = `${window.location.origin}/invoice/your-invoice/${json._id}`
-                const shareUrl = `https://api.whatsapp.com/send?phone=${config.toMobile}&text=${url}`;
-                window.open(shareUrl, "_blank");
-            }).catch((e) => { })
+        const response = await apiService.post("/invoice", invoiceData)
+        if (response) {
+            await apiService.delete('cart');
+        }
+        const url = `${window.location.origin}/invoice/your-invoice/${response._id}`
+        const shareUrl = `https://api.whatsapp.com/send?phone=${config.toMobile}&text=${url}`;
+        window.open(shareUrl, "_blank");
     };
 
     const handleIncrementQuantity = (id) => {
