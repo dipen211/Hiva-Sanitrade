@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Grid, Typography, Card, CardContent, CardMedia, Button, TextField, Pagination, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
 import { AddShoppingCart as AddShoppingCartIcon } from "@mui/icons-material";
 import apiService from "../../ApiService";
 import "./ProductsList.css";
+import { GeneralContext } from "../../context/GeneralContext";
 
 const ProductList = () => {
+    const { cartCount, setCartCount } = useContext(GeneralContext);
+
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
@@ -42,6 +45,7 @@ const ProductList = () => {
                 image: product.image,
             };
             await apiService.post("cart", data);
+            setCartCount(cartCount + 1);
         } catch (error) {
             console.error("Error adding item to cart:", error);
         }

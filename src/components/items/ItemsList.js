@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Grid, Typography, Card, CardContent, CardMedia, MenuItem, Select, FormControl, InputLabel, TextField, CircularProgress } from '@mui/material';
 import { AddCircle as AddCircleIcon, AddShoppingCart as AddShoppingCartIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import apiService from '../../ApiService';
 import { Pagination } from '@mui/material';
+import { GeneralContext } from '../../context/GeneralContext';
 
 const CompanyPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { cartCount, setCartCount } = useContext(GeneralContext);
 
     const [companyData, setCompanyData] = useState(null);
     const [products, setProducts] = useState([]);
@@ -67,6 +69,7 @@ const CompanyPage = () => {
                 image: item.image,
             };
             await apiService.post("cart", data);
+            setCartCount(cartCount + 1);
         } catch (error) {
             console.error('Error adding item to cart:', error);
             alert('Failed to add item to cart');

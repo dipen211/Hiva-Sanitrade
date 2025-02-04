@@ -12,6 +12,7 @@ const AddCompanyForm = () => {
     const [openModal, setOpenModal] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [submitLoading, setSubmitLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const companyData = location.state?.company;
@@ -79,7 +80,7 @@ const AddCompanyForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setSubmitLoading(true)
         const productData = {
             name: companyName,
             items: items && items.length > 0 ? [...items, ...newItems] : newItems,
@@ -92,7 +93,7 @@ const AddCompanyForm = () => {
             } else {
                 response = await apiService.post("products", productData);
             }
-
+            setSubmitLoading(false)
             if (response) {
                 navigate('/');
             } else {
@@ -218,7 +219,7 @@ const AddCompanyForm = () => {
                 </IconButton>
 
                 <Box sx={{ marginTop: 2 }}>
-                    <Button variant="contained" color="primary" type="submit" fullWidth>
+                    <Button disabled={submitLoading} variant="contained" color="primary" type="submit" fullWidth>
                         Submit
                     </Button>
                 </Box>

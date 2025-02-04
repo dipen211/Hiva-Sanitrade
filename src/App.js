@@ -12,6 +12,7 @@ import InvoiceDetails from "./components/invoice/InvoiceDetails";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import ProductList from "./components/items/ProductsList";
 import InvoiceList from "./components/invoice/InvoiceList";
+import { GeneralContextProvider } from "./context/GeneralContext";
 
 function App() {
   const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN;
@@ -55,22 +56,24 @@ function MainContent() {
   return (
     <Routes>
       <Route path="/invoice/your-invoice/:id" element={<InvoiceDetails />} />
-      
+
       <Route
         path="*"
         element={
           <ProtectedRoute>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<CompanyList />} />
-                <Route path="/add-company" element={<AddCompanyForm />} />
-                <Route path="/company/:id" element={<CompanyPage />} />
-                <Route path="/invoice" element={<Invoice />} />
-                <Route path="/invoice/:id" element={<Invoice />} />
-                <Route path="/products" element={<ProductList />} />
-                <Route path="/invoiceList" element={<InvoiceList />} />
-              </Routes>
-            </Layout>
+            <GeneralContextProvider>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<CompanyList />} />
+                  <Route path="/add-company" element={<AddCompanyForm />} />
+                  <Route path="/company/:id" element={<CompanyPage />} />
+                  <Route path="/invoice" element={<Invoice />} />
+                  <Route path="/invoice/:id" element={<Invoice />} />
+                  <Route path="/products" element={<ProductList />} />
+                  <Route path="/invoiceList" element={<InvoiceList />} />
+                </Routes>
+              </Layout>
+            </GeneralContextProvider>
           </ProtectedRoute>
         }
       />
