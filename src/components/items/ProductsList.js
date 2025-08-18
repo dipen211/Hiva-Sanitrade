@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Grid, Typography, Card, CardContent, CardMedia, Button, TextField, Pagination, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
-import { AddShoppingCart as AddShoppingCartIcon } from "@mui/icons-material";
+import { Box, Grid, Typography, Card, CardContent, CardMedia, Button, TextField, Pagination, FormControl, InputLabel, Select, MenuItem, CircularProgress, InputAdornment } from "@mui/material";
+import { AddShoppingCart as AddShoppingCartIcon, Search as SearchIcon, Inventory as InventoryIcon } from "@mui/icons-material";
 import apiService from "../../ApiService";
 import "./ProductsList.css";
 import { GeneralContext } from "../../context/GeneralContext";
@@ -82,69 +82,130 @@ const ProductList = () => {
     }
     return (
         <Box className="product-list-container">
-            <TextField
-                fullWidth
-                label="Search Products by Name"
-                variant="outlined"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                sx={{ marginBottom: 3 }}
-            />
-
-            <Box sx={{ marginBottom: 3 }}>
-                <FormControl size="small" sx={{ minWidth: 120 }}>
-                    <InputLabel>Page Size</InputLabel>
-                    <Select value={itemsPerPage} onChange={handleItemsPerPageChange} label="Page Size">
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={20}>20</MenuItem>
-                        <MenuItem value={50}>50</MenuItem>
-                    </Select>
-                </FormControl>
+            {/* Page Header */}
+            <Box className="products-header">
+                <Box>
+                    <Typography variant="h2" className="products-title">
+                        Our Products
+                    </Typography>
+                    <Typography className="products-subtitle">
+                        Discover amazing products from our partners
+                    </Typography>
+                </Box>
             </Box>
 
-            <Grid container spacing={3}>
-                {currentProducts.length > 0 && currentProducts.map((product) =>
-                    <Grid item xs={12} sm={6} md={4} key={product._id}>
-                        <Card className="product-card">
-                            <CardMedia
-                                component="img"
-                                height="200"
-                                image={product.image}
-                                alt={product.name}
-                                className="product-image"
-                            />
-                            <CardContent>
-                                <Box className="product-info">
-                                    <Typography variant="h6" className="product-name">
-                                        {product.companyName} - {product.name}
-                                    </Typography>
-                                    <Typography variant="body1" className="product-price">
-                                        ₹{product.price.toFixed(2)}
-                                    </Typography>
-                                </Box>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    startIcon={<AddShoppingCartIcon />}
-                                    onClick={() => handleAddToCart(product)}
-                                >
-                                    Add to Cart
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                )}
-            </Grid>
-
-            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
-                <Pagination
-                    count={Math.ceil(filteredProducts.length / itemsPerPage)}
-                    page={page}
-                    onChange={handlePageChange}
-                    color="primary"
-                />
+            {/* Stats Section */}
+            <Box className="stats-section">
+                <Box className="stats-card">
+                    <Typography className="stats-value">{products.length}</Typography>
+                    <Typography className="stats-label">Total Products</Typography>
+                </Box>
+                <Box className="stats-card">
+                    <Typography className="stats-value">{filteredProducts.length}</Typography>
+                    <Typography className="stats-label">Available</Typography>
+                </Box>
+                <Box className="stats-card">
+                    <Typography className="stats-value">{new Set(products.map(p => p.companyName)).size}</Typography>
+                    <Typography className="stats-label">Companies</Typography>
+                </Box>
+                <Box className="stats-card">
+                    <Typography className="stats-value">{cartCount}</Typography>
+                    <Typography className="stats-label">In Cart</Typography>
+                </Box>
             </Box>
+
+            {/* Search and Filter Section */}
+            <Box className="search-filter-section">
+                <Box className="search-container">
+                    <TextField
+                        fullWidth
+                        label="Search products..."
+                        variant="outlined"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Box>
+                <Box className="filter-controls">
+                    <FormControl size="small" className="page-size-control">
+                        <InputLabel>Show</InputLabel>
+                        <Select value={itemsPerPage} onChange={handleItemsPerPageChange} label="Show">
+                            <MenuItem value={10}>10 items</MenuItem>
+                            <MenuItem value={20}>20 items</MenuItem>
+                            <MenuItem value={50}>50 items</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
+            </Box>
+
+            {/* Products Grid */}
+            {currentProducts.length > 0 ? (
+                <Grid container spacing={3} className="products-grid">
+                    {currentProducts.map((product) => (
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
+                            <Card className="product-card">
+                                <CardMedia
+                                    component="img"
+                                    image={product.image || 'https://via.placeholder.com/300x240?text=No+Image'}
+                                    alt={product.name}
+                                    className="product-image"
+                                />
+                                <CardContent>
+                                    <Box className="product-info">
+                                        <Typography variant="body2" className="company-name">
+                                            {product.companyName}
+                                        </Typography>
+                                        <Typography variant="h6" className="product-name">
+                                            {product.name}
+                                        </Typography>
+                                        <Typography variant="h5" className="product-price">
+                                            ₹{product.price.toFixed(2)}
+                                        </Typography>
+                                    </Box>
+                                    <Button
+                                        variant="contained"
+                                        fullWidth
+                                        startIcon={<AddShoppingCartIcon />}
+                                        onClick={() => handleAddToCart(product)}
+                                        className="add-to-cart-btn"
+                                    >
+                                        Add to Cart
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            ) : (
+                <Box className="empty-state">
+                    <InventoryIcon className="empty-state-icon" />
+                    <Typography variant="h5" className="empty-state-title">
+                        No products found
+                    </Typography>
+                    <Typography variant="body1" className="empty-state-description">
+                        Try adjusting your search criteria or check back later for new products.
+                    </Typography>
+                </Box>
+            )}
+
+            {/* Pagination */}
+            {filteredProducts.length > itemsPerPage && (
+                <Box className="pagination-container">
+                    <Pagination
+                        count={Math.ceil(filteredProducts.length / itemsPerPage)}
+                        page={page}
+                        onChange={handlePageChange}
+                        color="primary"
+                        size="large"
+                    />
+                </Box>
+            )}
         </Box>
     );
 };
