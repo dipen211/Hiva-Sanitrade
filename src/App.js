@@ -20,19 +20,19 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      // <Auth0Provider
-      //   domain={domain}
-      //   clientId={clientId}
-      //   cacheLocation="localstorage"
-      //   useRefreshTokens={true}
-      //   authorizationParams={{
-      //     redirect_uri: window.location.origin
-      //   }}
-      // >
+      <Auth0Provider
+        domain={domain}
+        clientId={clientId}
+        cacheLocation="localstorage"
+        useRefreshTokens={true}
+        authorizationParams={{
+          redirect_uri: window.location.origin
+        }}
+      >
         <Router>
           <MainContent />
         </Router>
-      // </Auth0Provider>
+      </Auth0Provider>
     </ThemeProvider>
   );
 }
