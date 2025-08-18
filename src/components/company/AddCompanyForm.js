@@ -4,6 +4,7 @@ import { AddCircle as AddCircleIcon, Delete as DeleteIcon } from '@mui/icons-mat
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import apiService from '../../ApiService';
+import './AddCompanyForm.css';
 
 const AddCompanyForm = () => {
     const [companyName, setCompanyName] = useState('');

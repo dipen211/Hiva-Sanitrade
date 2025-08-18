@@ -1,0 +1,348 @@
+/* Loading Screen Container */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* Loading Content */
+.loading-content {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Logo Section */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.loading-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+    animation: logoSpin 4s linear infinite;
+}
+
+.loading-brand {
+    color: white !important;
+    font-weight: 800 !important;
+    font-size: 2.5rem !important;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+}
+
+/* Loading Animation */
+.loading-animation {
+    position: relative;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner {
+    color: rgba(255, 255, 255, 0.9) !important;
+    z-index: 2;
+    position: relative;
+}
+
+.pulse-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: pulse 2s ease-out infinite;
+}
+
+.ring-1 {
+    animation-delay: 0s;
+}
+
+.ring-2 {
+    animation-delay: 0.5s;
+}
+
+.ring-3 {
+    animation-delay: 1s;
+}
+
+/* Loading Text */
+.loading-message {
+    color: white !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.loading-subtitle {
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 24px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading Dots */
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.dot-1 {
+    animation-delay: 0s;
+}
+
+.dot-2 {
+    animation-delay: 0.2s;
+}
+
+.dot-3 {
+    animation-delay: 0.4s;
+}
+
+/* Background Animation */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: floatShape 8s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 120px;
+    height: 120px;
+    top: 10%;
+    left: 15%;
+    animation-delay: 0s;
+    animation-duration: 6s;
+}
+
+.shape-2 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    right: 20%;
+    animation-delay: 1s;
+    animation-duration: 8s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    bottom: 25%;
+    left: 25%;
+    animation-delay: 2s;
+    animation-duration: 7s;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    bottom: 15%;
+    right: 15%;
+    animation-delay: 3s;
+    animation-duration: 9s;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes logoSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes textGlow {
+    from {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    to {
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+}
+
+@keyframes dotBounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+    30% {
+        transform: translateY(-15px);
+        opacity: 1;
+    }
+}
+
+@keyframes floatShape {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.1;
+    }
+    25% {
+        transform: translateY(-30px) rotate(90deg);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translateY(-60px) rotate(180deg);
+        opacity: 0.1;
+    }
+    75% {
+        transform: translateY(-30px) rotate(270deg);
+        opacity: 0.2;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .loading-brand {
+        font-size: 2rem !important;
+    }
+
+    .loading-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .logo-container {
+        gap: 12px;
+        margin-bottom: 32px;
+    }
+
+    .loading-animation {
+        margin-bottom: 24px;
+    }
+
+    .loading-spinner {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .pulse-ring {
+        width: 60px;
+        height: 60px;
+    }
+
+    .floating-shape {
+        opacity: 0.05 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .loading-brand {
+        font-size: 1.75rem !important;
+        letter-spacing: 1px;
+    }
+
+    .loading-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-container {
+        margin-bottom: 24px;
+    }
+
+    .loading-message {
+        font-size: 1.125rem !important;
+    }
+
+    .loading-subtitle {
+        font-size: 0.875rem !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .loading-screen {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .loading-logo,
+    .logo-container,
+    .floating-shape,
+    .pulse-ring,
+    .dot {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

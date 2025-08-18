@@ -3,6 +3,7 @@ import { Grid, Box, Typography, Button, TextField, InputAdornment, Card, Divider
 import { useNavigate, useParams } from "react-router-dom";
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import apiService from "../../ApiService";
+import "./Invoice.css";
 
 const Invoice = () => {
     const { id } = useParams();

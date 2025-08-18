@@ -15,8 +15,8 @@ import InvoiceList from "./components/invoice/InvoiceList";
 import { GeneralContextProvider } from "./context/GeneralContext";
 
 function App() {
-  const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN;
-  const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID;
+  const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN || "dev-example.us.auth0.com";
+  const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID || "your-client-id-here";
 
   return (
     <ThemeProvider theme={theme}>
@@ -54,21 +54,7 @@ const ProtectedRoute = ({ children }) => {
 
 function MainContent() {
 
-  useEffect(() => {
-    getTokenFromBackend();
-  }, [])
-
-  async function getTokenFromBackend() {
-    try {
-      const response = await fetch("http://localhost:3001/api/get-token");
-      const data = await response.json();
-      console.log("Token from backend:", data.access_token);
-
-      localStorage.setItem("authToken", data.access_token);
-    } catch (err) {
-      console.error("Error fetching token:", err);
-    }
-  }
+  // TODO: Add any initialization logic here if needed
 
   return (
     <Routes>
