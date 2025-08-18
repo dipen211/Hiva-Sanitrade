@@ -61,7 +61,7 @@ function MainContent() {
 
   async function getTokenFromBackend() {
     try {
-      const response = await apiService.get(`get-token`);
+      const response = await apiService.get('token');
       const data = await response.json();
       console.log("Token from backend:", data.access_token);
 
