@@ -54,21 +54,7 @@ const ProtectedRoute = ({ children }) => {
 
 function MainContent() {
 
-  // useEffect(() => {
-  //   // getTokenFromBackend(); // TODO: Configure backend endpoint
-  // }, [])
-
-  // async function getTokenFromBackend() {
-  //   try {
-  //     const response = await fetch("http://localhost:3001/api/get-token");
-  //     const data = await response.json();
-  //     console.log("Token from backend:", data.access_token);
-
-  //     localStorage.setItem("authToken", data.access_token);
-  //   } catch (err) {
-  //     console.error("Error fetching token:", err);
-  //   }
-  // }
+  // TODO: Add any initialization logic here if needed
 
   return (
     <Routes>
