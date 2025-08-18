@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Grid, Box, Typography, Button, TextField, InputAdornment, Card, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { Delete as DeleteIcon } from '@mui/icons-material';
+import { Delete as DeleteIcon, Receipt as ReceiptIcon, Print as PrintIcon, Save as SaveIcon, ShoppingCart as CartIcon } from '@mui/icons-material';
 import apiService from "../../ApiService";
+import "./Invoice.css";
 
 const Invoice = () => {
     const { id } = useParams();
