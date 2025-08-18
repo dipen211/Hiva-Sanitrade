@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CircularProgress, ThemeProvider } from '@mui/material';
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import { theme } from "./theme";
-import './App.css';
 import Layout from "./shared/Layout";
 import CompanyList from "./components/company/CompanyList";
 import AddCompanyForm from "./components/company/AddCompanyForm";
@@ -13,6 +12,8 @@ import InvoiceDetails from "./components/invoice/InvoiceDetails";
 import ProductList from "./components/items/ProductsList";
 import InvoiceList from "./components/invoice/InvoiceList";
 import { GeneralContextProvider } from "./context/GeneralContext";
+import apiService from "./ApiService";
+import './App.css';
 
 function App() {
   const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN;
@@ -60,7 +61,7 @@ function MainContent() {
 
   async function getTokenFromBackend() {
     try {
-      const response = await fetch("http://localhost:3001/api/get-token");
+      const response = await apiService.get(`get-token`);
       const data = await response.json();
       console.log("Token from backend:", data.access_token);
 
