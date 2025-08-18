@@ -11,7 +11,7 @@ import {
   Grid,
   Avatar,
 } from '@mui/material';
-import { RemoveRedEye as EyeIcon, Edit as EditIcon, Delete as DeleteIcon, Business as BusinessIcon, Add as AddIcon } from '@mui/icons-material';
+import { RemoveRedEye as EyeIcon, Edit as EditIcon, Delete as DeleteIcon, Add as AddIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../../ApiService';
 import WelcomeBanner from '../shared/WelcomeBanner';
