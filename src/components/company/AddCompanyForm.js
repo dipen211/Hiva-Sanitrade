@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Grid, IconButton, Modal, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, Typography, Grid, IconButton, Modal, CircularProgress, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { AddCircle as AddCircleIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -16,6 +16,16 @@ const AddCompanyForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const companyData = location.state?.company;
+
+    const CATEGORY_OPTIONS = [
+        { value: "faucets", label: "Faucets" },
+        { value: "showers", label: "Showers" },
+        { value: "sanitaryware", label: "Sanitaryware" },
+        { value: "thermostatic_mixers", label: "Thermostatic Mixers" },
+        { value: "water_heaters", label: "Water Heaters" },
+        { value: "bath_tubs", label: "Bath Tubs" },
+        { value: "shower_panel", label: "Shower Panel" },
+    ];
 
     useEffect(() => {
         if (companyData) {
@@ -122,7 +132,7 @@ const AddCompanyForm = () => {
                     <Grid container spacing={2} key={index} sx={{ marginBottom: 2 }}>
                         <Grid item xs={6}>
                             <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                                {`Item ${index + 1}`}
+                                {`Product ${index + 1}`}
                             </Typography>
                         </Grid>
                         <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -135,7 +145,23 @@ const AddCompanyForm = () => {
                                 Remove Item
                             </Button>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={4}>
+                            <FormControl fullWidth variant="outlined">
+                                <InputLabel>Category</InputLabel>
+                                <Select
+                                    label="Category"
+                                    value={item.category || ""}
+                                    onChange={(e) => handleItemChange(index, "category", e.target.value)}
+                                >
+                                    {CATEGORY_OPTIONS.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 label="Item Name"
@@ -144,7 +170,7 @@ const AddCompanyForm = () => {
                                 onChange={(e) => handleItemChange(index, 'name', e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 label="Price"

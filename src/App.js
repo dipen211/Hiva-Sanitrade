@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CircularProgress, ThemeProvider } from '@mui/material';
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import { theme } from "./theme";
 import './App.css';
 import Layout from "./shared/Layout";
@@ -9,7 +10,6 @@ import AddCompanyForm from "./components/company/AddCompanyForm";
 import CompanyPage from "./components/items/ItemsList";
 import Invoice from "./components/invoice/Invoice";
 import InvoiceDetails from "./components/invoice/InvoiceDetails";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import ProductList from "./components/items/ProductsList";
 import InvoiceList from "./components/invoice/InvoiceList";
 import { GeneralContextProvider } from "./context/GeneralContext";
@@ -53,6 +53,23 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function MainContent() {
+
+  useEffect(() => {
+    getTokenFromBackend();
+  }, [])
+
+  async function getTokenFromBackend() {
+    try {
+      const response = await fetch("http://localhost:3001/api/get-token");
+      const data = await response.json();
+      console.log("Token from backend:", data.access_token);
+
+      localStorage.setItem("authToken", data.access_token);
+    } catch (err) {
+      console.error("Error fetching token:", err);
+    }
+  }
+
   return (
     <Routes>
       <Route path="/invoice/your-invoice/:id" element={<InvoiceDetails />} />
