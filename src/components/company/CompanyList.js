@@ -14,6 +14,7 @@ import {
 import { RemoveRedEye as EyeIcon, Edit as EditIcon, Delete as DeleteIcon, Business as BusinessIcon, Add as AddIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../../ApiService';
+import WelcomeBanner from '../shared/WelcomeBanner';
 import './CompanyList.css';
 
 const CompanyList = () => {
@@ -167,23 +168,7 @@ const CompanyList = () => {
           ))}
         </Grid>
       ) : (
-        <Box className="empty-state">
-          <BusinessIcon className="empty-state-icon" />
-          <Typography variant="h5" className="empty-state-title">
-            No companies yet
-          </Typography>
-          <Typography variant="body1" className="empty-state-description">
-            Start by adding your first company to manage products and track business relationships.
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={handleAddCompany}
-            startIcon={<AddIcon />}
-            className="add-company-btn"
-          >
-            Add Your First Company
-          </Button>
-        </Box>
+        <WelcomeBanner userName="Admin" />
       )}
 
       <Modal
