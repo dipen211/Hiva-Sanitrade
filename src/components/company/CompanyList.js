@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Card,
-  CardContent,
   CardActions,
   Typography,
   Button,
@@ -14,15 +13,11 @@ import {
 } from '@mui/material';
 import { RemoveRedEye as EyeIcon, Edit as EditIcon, Delete as DeleteIcon, Business as BusinessIcon, Add as AddIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import apiService from '../../ApiService';
 import './CompanyList.css';
 
 const CompanyList = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
