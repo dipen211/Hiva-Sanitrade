@@ -88,7 +88,11 @@ const Layout = (props) => {
                                     Log Out
                                 </MenuItem>
                             </Menu>
-                            <IconButton color="inherit" onClick={() => navigate("/invoice")}>
+                            <IconButton
+                                color="inherit"
+                                onClick={() => navigate("/invoice")}
+                                className="cart-icon"
+                            >
                                 <Badge badgeContent={cartCount} color="error">
                                     <ShoppingCartIcon />
                                 </Badge>
@@ -120,7 +124,11 @@ const Layout = (props) => {
                             >
                                 Invoices
                             </Button>
-                            <IconButton color="inherit" onClick={() => navigate("/invoice")}>
+                            <IconButton
+                                color="inherit"
+                                onClick={() => navigate("/invoice")}
+                                className="cart-icon"
+                            >
                                 <Badge badgeContent={cartCount} color="error">
                                     <ShoppingCartIcon />
                                 </Badge>
