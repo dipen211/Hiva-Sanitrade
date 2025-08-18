@@ -15,24 +15,24 @@ import InvoiceList from "./components/invoice/InvoiceList";
 import { GeneralContextProvider } from "./context/GeneralContext";
 
 function App() {
-  const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN;
-  const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID;
+  // const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN;
+  // const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID;
 
   return (
     <ThemeProvider theme={theme}>
-      <Auth0Provider
-        domain={domain}
-        clientId={clientId}
-        cacheLocation="localstorage"
-        useRefreshTokens={true}
-        authorizationParams={{
-          redirect_uri: window.location.origin
-        }}
-      >
+      // <Auth0Provider
+      //   domain={domain}
+      //   clientId={clientId}
+      //   cacheLocation="localstorage"
+      //   useRefreshTokens={true}
+      //   authorizationParams={{
+      //     redirect_uri: window.location.origin
+      //   }}
+      // >
         <Router>
           <MainContent />
         </Router>
-      </Auth0Provider>
+      // </Auth0Provider>
     </ThemeProvider>
   );
 }
@@ -54,21 +54,21 @@ const ProtectedRoute = ({ children }) => {
 
 function MainContent() {
 
-  useEffect(() => {
-    // getTokenFromBackend(); // TODO: Configure backend endpoint
-  }, [])
+  // useEffect(() => {
+  //   // getTokenFromBackend(); // TODO: Configure backend endpoint
+  // }, [])
 
-  async function getTokenFromBackend() {
-    try {
-      const response = await fetch("http://localhost:3001/api/get-token");
-      const data = await response.json();
-      console.log("Token from backend:", data.access_token);
+  // async function getTokenFromBackend() {
+  //   try {
+  //     const response = await fetch("http://localhost:3001/api/get-token");
+  //     const data = await response.json();
+  //     console.log("Token from backend:", data.access_token);
 
-      localStorage.setItem("authToken", data.access_token);
-    } catch (err) {
-      console.error("Error fetching token:", err);
-    }
-  }
+  //     localStorage.setItem("authToken", data.access_token);
+  //   } catch (err) {
+  //     console.error("Error fetching token:", err);
+  //   }
+  // }
 
   return (
     <Routes>
