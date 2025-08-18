@@ -55,7 +55,7 @@ const ProtectedRoute = ({ children }) => {
 function MainContent() {
 
   useEffect(() => {
-    getTokenFromBackend();
+    // getTokenFromBackend(); // TODO: Configure backend endpoint
   }, [])
 
   async function getTokenFromBackend() {
