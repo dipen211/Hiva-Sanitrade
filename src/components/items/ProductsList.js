@@ -76,9 +76,14 @@ const ProductList = () => {
     const startIndex = (page - 1) * itemsPerPage;
     const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
     if (loading) {
-        return <Box sx={{ textAlign: 'center', marginTop: 4 }}>
-            <CircularProgress />
-        </Box>;
+        return (
+            <Box className="loading-container">
+                <CircularProgress size={60} className="loading-spinner" />
+                <Typography variant="h6" className="loading-text">
+                    Loading amazing products...
+                </Typography>
+            </Box>
+        );
     }
     return (
         <Box className="product-list-container">
