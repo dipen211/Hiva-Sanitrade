@@ -1,7 +1,9 @@
 /* AppBar */
 .app-bar {
-    background-color: #1976d2;
-    padding: 0 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Toolbar */
@@ -9,6 +11,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 8px 24px !important;
+    min-height: 72px !important;
 }
 
 /* Logo Section */
@@ -16,21 +20,56 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    gap: 8px;
+    gap: 12px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.logo-container:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 .logo {
-    height: 40px;
+    height: 44px;
+    width: 44px;
+    border-radius: 12px;
+    object-fit: cover;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .logo-text {
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Menu Icon */
 .menu-icon-container {
     display: none;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-icon {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 12px !important;
+    padding: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.menu-icon:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px);
 }
 
 /* Menu */
@@ -38,52 +77,231 @@
     margin-top: 8px;
 }
 
+.menu .MuiPaper-root {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
 .menu-item {
-    padding: 8px 16px;
-    font-size: 16px;
+    padding: 12px 24px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: #334155 !important;
+    transition: all 0.2s ease !important;
+    border-radius: 12px !important;
+    margin: 4px 8px !important;
+}
+
+.menu-item:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    transform: translateX(4px);
 }
 
 /* Button Container */
 .button-container {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
 }
 
-/* Buttons */
+/* Navigation Buttons */
 .nav-button {
-    font-weight: bold;
-    text-transform: none;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    overflow: hidden;
 }
 
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.nav-button:hover::before {
+    left: 0;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Cart Icon */
+.cart-icon {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+    transition: all 0.3s ease !important;
+    margin: 0 8px !important;
+}
+
+.cart-icon:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.cart-icon .MuiBadge-badge {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border: 2px solid white !important;
+    box-shadow: 0 4px 12px rgba(240, 147, 251, 0.4) !important;
+}
+
+/* Logout Button */
 .logout-button {
-    font-weight: bold;
-    text-transform: none;
-    border-color: white;
-    transition: background-color 0.2s;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    border-radius: 50px !important;
+    padding: 10px 20px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.logout-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.logout-button:hover::before {
+    left: 0;
 }
 
 .logout-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+}
+
+.logout-button span {
+    position: relative;
+    z-index: 1;
 }
 
 /* Content Container */
 .content-container {
-    padding: 16px;
-    margin-top: 16px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 32px !important;
+    margin: 24px auto !important;
+    max-width: 1400px !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.content-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
 }
 
 /* Media Queries */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .menu-icon-container {
         display: flex;
-        align-items: center;
     }
 
     .button-container {
         display: none;
     }
+
+    .toolbar {
+        padding: 8px 16px !important;
+    }
+
+    .content-container {
+        margin: 16px !important;
+        padding: 20px !important;
+        border-radius: 20px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .logo {
+        height: 36px;
+        width: 36px;
+    }
+
+    .content-container {
+        margin: 12px !important;
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Floating particles effect */
+.content-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
 }
