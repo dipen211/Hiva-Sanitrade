@@ -15,8 +15,8 @@ import InvoiceList from "./components/invoice/InvoiceList";
 import { GeneralContextProvider } from "./context/GeneralContext";
 
 function App() {
-  // const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN;
-  // const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID;
+  const domain = process.env.REACT_APP_AUTH_CLIENT_DOMAIN || "dev-example.us.auth0.com";
+  const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID || "your-client-id-here";
 
   return (
     <ThemeProvider theme={theme}>
