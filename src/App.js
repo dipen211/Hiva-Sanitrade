@@ -62,10 +62,7 @@ function MainContent() {
   async function getTokenFromBackend() {
     try {
       const response = await apiService.get('token');
-      const data = await response.json();
-      console.log("Token from backend:", data.access_token);
-
-      localStorage.setItem("authToken", data.access_token);
+      localStorage.setItem("authToken", response.access_token);
     } catch (err) {
       console.error("Error fetching token:", err);
     }
