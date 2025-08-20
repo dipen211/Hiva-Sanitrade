@@ -23,8 +23,6 @@ const Invoice = () => {
         fromMobile: "+91-8140210375",
         total: "0.00",
         subTotal: "0.00",
-        taxRate: "",
-        taxAmmount: "0.00",
         discountRate: "",
         discountAmmount: "0.00",
     });
@@ -42,21 +40,16 @@ const Invoice = () => {
         });
 
         const subTotalValue = parseFloat(subTotal).toFixed(2);
-        const taxAmmountValue = (
-            parseFloat(subTotal) *
-            (config.taxRate / 100)
-        ).toFixed(2);
         const discountAmmountValue = (
             parseFloat(subTotal) *
             (config.discountRate / 100)
         ).toFixed(2);
         const totalValue =
-            parseFloat(subTotal) - parseFloat(discountAmmountValue) + parseFloat(taxAmmountValue);
+            parseFloat(subTotal) - parseFloat(discountAmmountValue);
 
         setConfig({
             ...config,
             subTotal: subTotalValue,
-            taxAmmount: taxAmmountValue,
             discountAmmount: discountAmmountValue,
             total: totalValue.toFixed(2),
         });
@@ -71,7 +64,6 @@ const Invoice = () => {
                     ...config,
                     billTo: response.billTo,
                     discountRate: response.discountRate,
-                    taxRate: response.taxRate,
                     toMobile: response.toMobile,
                 });
             } catch (error) {
@@ -93,7 +85,7 @@ const Invoice = () => {
 
     useEffect(() => {
         handleCalculateTotal();
-    }, [items, config.taxRate, config.discountRate]);
+    }, [items, config.discountRate]);
 
     async function handleRowDel(item) {
         try {
@@ -112,9 +104,6 @@ const Invoice = () => {
         else if (!/^\d{10}$/.test(config.toMobile))
             validationErrors.toMobile = "Phone number must be 10 digits.";
 
-        if (config.taxRate === "" || isNaN(config.taxRate) || config.taxRate < 0 || config.taxRate > 100)
-            validationErrors.taxRate = "Tax rate must be a number between 0 and 100.";
-
         if (config.discountRate === "" || isNaN(config.discountRate) || config.discountRate < 0 || config.discountRate > 100)
             validationErrors.discountRate = "Discount rate must be a number between 0 and 100.";
         setErrors(validationErrors);
@@ -127,7 +116,6 @@ const Invoice = () => {
         }
         const invoiceData = {
             items: items,
-            taxRate: config.taxRate,
             discountRate: config.discountRate,
             billTo: config.billTo,
             toMobile: config.toMobile,
@@ -307,12 +295,6 @@ const Invoice = () => {
                                             {config.currency} {config.discountAmmount}
                                         </Typography>
                                     </Box>
-                                    <Box display="flex" justifyContent="space-between" mb={1}>
-                                        <Typography variant="body1">Tax:</Typography>
-                                        <Typography variant="body1">
-                                            {config.currency} {config.taxAmmount}
-                                        </Typography>
-                                    </Box>
                                     <Divider />
                                     <Box display="flex" justifyContent="space-between" mt={2}>
                                         <Typography variant="h6">Total:</Typography>
@@ -365,21 +347,6 @@ const Invoice = () => {
                         >
                             Send Invoice
                         </Button>
-                        <TextField
-                            label="Tax Rate"
-                            name={'taxRate'}
-                            id={'taxRate'}
-                            error={!!(errors && errors.taxRate)}
-                            helperText={errors && errors.taxRate}
-                            fullWidth
-                            type="number"
-                            value={config.taxRate}
-                            onChange={(e) => setConfig({ ...config, taxRate: e.target.value })}
-                            sx={{ mt: 3 }}
-                            InputProps={{
-                                endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                            }}
-                        />
                         <TextField
                             label="Discount Rate"
                             fullWidth

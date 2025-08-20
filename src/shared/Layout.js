@@ -60,12 +60,12 @@ const Layout = (props) => {
                                 </MenuItem>
                                 <MenuItem
                                     onClick={() => {
-                                        navigate("/products");
+                                        navigate("/company");
                                         handleMenuClose();
                                     }}
                                     className="menu-item"
                                 >
-                                    Items
+                                    Companies
                                 </MenuItem>
                                 <MenuItem
                                     onClick={() => {
@@ -112,9 +112,9 @@ const Layout = (props) => {
                                 variant="text"
                                 color="inherit"
                                 className="nav-button"
-                                onClick={() => navigate("/products")}
+                                onClick={() => navigate("/company")}
                             >
-                                Items
+                                Companies
                             </Button>
                             <Button
                                 variant="text"

@@ -64,7 +64,7 @@ const NotFound = () => {
           <Box className="links-container">
             <Button 
               variant="text" 
-              onClick={() => navigate('/products')}
+              onClick={() => navigate('/')}
               className="link-btn"
             >
               Products

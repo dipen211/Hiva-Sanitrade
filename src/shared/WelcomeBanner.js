@@ -26,7 +26,7 @@ const WelcomeBanner = ({ userName = "User" }) => {
       title: "Browse Products",
       description: "Explore available items",
       icon: <InventoryIcon />,
-      action: () => navigate('/products'),
+      action: () => navigate('/company'),
       color: '#10b981'
     },
     {

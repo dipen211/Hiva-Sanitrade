@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Grid, IconButton, Modal, CircularProgress, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { TextField, Button, Box, Typography, Grid, IconButton, Modal, CircularProgress, Select, MenuItem, FormControl, InputLabel, Autocomplete } from '@mui/material';
 import { AddCircle as AddCircleIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import apiService from '../../ApiService';
-import './AddCompanyForm.css';
 
 const AddCompanyForm = () => {
     const [companyName, setCompanyName] = useState('');
     const [items, setItems] = useState();
-    const [newItems, setNewItems] = useState([{ name: '', price: '', image: '' }]);
+    const [newItems, setNewItems] = useState([{ category: '', code: '', name: '', price: '', image: '' }]);
     const [openModal, setOpenModal] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -19,13 +18,13 @@ const AddCompanyForm = () => {
     const companyData = location.state?.company;
 
     const CATEGORY_OPTIONS = [
-        { value: "faucets", label: "Faucets" },
-        { value: "showers", label: "Showers" },
-        { value: "sanitaryware", label: "Sanitaryware" },
-        { value: "thermostatic_mixers", label: "Thermostatic Mixers" },
-        { value: "water_heaters", label: "Water Heaters" },
-        { value: "bath_tubs", label: "Bath Tubs" },
-        { value: "shower_panel", label: "Shower Panel" },
+        "Faucets",
+        "Showers",
+        "Sanitaryware",
+        "Thermostatic Mixers",
+        "Water Heaters",
+        "Bath Tubs",
+        "Shower Panel",
     ];
 
     useEffect(() => {
@@ -146,23 +145,20 @@ const AddCompanyForm = () => {
                                 Remove Item
                             </Button>
                         </Grid>
-                        <Grid item xs={12} md={4}>
-                            <FormControl fullWidth variant="outlined">
-                                <InputLabel>Category</InputLabel>
-                                <Select
-                                    label="Category"
-                                    value={item.category || ""}
-                                    onChange={(e) => handleItemChange(index, "category", e.target.value)}
-                                >
-                                    {CATEGORY_OPTIONS.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                        <Grid className='search-filter-section' item xs={12} md={3}>
+                            <Autocomplete
+                                options={CATEGORY_OPTIONS}
+                                value={item.category || ""}
+                                getOptionLabel={(option) => option || ""}
+                                onChange={(e, value) => handleItemChange(index, "category", value)}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Category" variant="outlined" />
+                                )}
+                                size="medium"
+                                fullWidth
+                            />
                         </Grid>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 fullWidth
                                 label="Item Name"
@@ -171,13 +167,22 @@ const AddCompanyForm = () => {
                                 onChange={(e) => handleItemChange(index, 'name', e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 fullWidth
                                 label="Price"
                                 variant="outlined"
                                 value={item.price}
                                 onChange={(e) => handleItemChange(index, 'price', e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <TextField
+                                fullWidth
+                                label="Item Id"
+                                variant="outlined"
+                                value={item.code}
+                                onChange={(e) => handleItemChange(index, 'code', e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>

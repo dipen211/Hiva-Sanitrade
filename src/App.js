@@ -79,12 +79,12 @@ function MainContent() {
             <GeneralContextProvider>
               <Layout>
                 <Routes>
-                  <Route path="/" element={<CompanyList />} />
+                  <Route path="/" element={<ProductList />} />
                   <Route path="/add-company" element={<AddCompanyForm />} />
                   <Route path="/company/:id" element={<CompanyPage />} />
                   <Route path="/invoice" element={<Invoice />} />
                   <Route path="/invoice/:id" element={<Invoice />} />
-                  <Route path="/products" element={<ProductList />} />
+                  <Route path="/company" element={<CompanyList />} />
                   <Route path="/invoiceList" element={<InvoiceList />} />
                 </Routes>
               </Layout>

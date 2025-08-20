@@ -18,8 +18,6 @@ const InvoiceDetails = () => {
         fromMobile: "+91-8140210375",
         total: "0.00",
         subTotal: "0.00",
-        taxRate: "",
-        taxAmmount: "0.00",
         discountRate: "",
         discountAmmount: "0.00",
         createdDate: '',
@@ -49,21 +47,17 @@ const InvoiceDetails = () => {
         });
 
         const subTotalValue = parseFloat(subTotal).toFixed(2);
-        const taxAmmountValue = (
-            parseFloat(subTotal) *
-            (config.taxRate / 100)
-        ).toFixed(2);
+
         const discountAmmountValue = (
             parseFloat(subTotal) *
             (config.discountRate / 100)
         ).toFixed(2);
         const totalValue =
-            parseFloat(subTotal) - parseFloat(discountAmmountValue) + parseFloat(taxAmmountValue);
+            parseFloat(subTotal) - parseFloat(discountAmmountValue);
 
         setConfig({
             ...config,
             subTotal: subTotalValue,
-            taxAmmount: taxAmmountValue,
             discountAmmount: discountAmmountValue,
             total: totalValue.toFixed(2),
         });
@@ -86,7 +80,6 @@ const InvoiceDetails = () => {
                 items: response.items,
                 billTo: response.billTo,
                 discountRate: response.discountRate,
-                taxRate: response.taxRate,
                 toMobile: response.toMobile,
                 createdDate: formatDate(response.createdAt),
             });
@@ -101,11 +94,11 @@ const InvoiceDetails = () => {
 
     useEffect(() => {
         handleCalculateTotal();
-    }, [config.items, config.taxRate, config.discountRate]);
+    }, [config.items, config.discountRate]);
 
     const handleDownloadPDF = () => {
         const element = document.getElementById("invoice-content");
-    
+
         const options = {
             margin: 10,
             filename: "invoice.pdf",
@@ -117,13 +110,13 @@ const InvoiceDetails = () => {
             },
             jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
         };
-    
+
         html2pdf()
             .from(element)
             .set(options)
             .save();
     };
-    
+
 
     return (
         <Box id='invoice-content'>
@@ -211,12 +204,6 @@ const InvoiceDetails = () => {
                                         <Typography variant="body1">Discount({config.discountRate}%):</Typography>
                                         <Typography variant="body1">
                                             {config.currency} {config.discountAmmount}
-                                        </Typography>
-                                    </Box>
-                                    <Box className="subtotal-row">
-                                        <Typography variant="body1">Tax({config.taxRate}%):</Typography>
-                                        <Typography variant="body1">
-                                            {config.currency} {config.taxAmmount}
                                         </Typography>
                                     </Box>
                                     <Divider />

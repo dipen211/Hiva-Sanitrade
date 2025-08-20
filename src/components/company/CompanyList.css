@@ -290,39 +290,6 @@
     box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4) !important;
 }
 
-/* Empty State */
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 400px;
-    text-align: center;
-    padding: 48px;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.empty-state-icon {
-    font-size: 4rem !important;
-    color: #cbd5e1 !important;
-    margin-bottom: 24px !important;
-}
-
-.empty-state-title {
-    color: #475569 !important;
-    font-weight: 600 !important;
-    margin-bottom: 12px !important;
-}
-
-.empty-state-description {
-    color: #64748b !important;
-    margin-bottom: 32px !important;
-    max-width: 400px;
-}
-
 /* Loading State */
 .loading-container {
     display: flex;

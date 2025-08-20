@@ -207,6 +207,10 @@
     flex-direction: column !important;
     gap: 8px !important;
     flex: 1 !important;
+    @media (max-width: 800px){
+        flex-direction: row !important;
+        justify-content: space-between;
+    }
 }
 
 .product-name {
