@@ -235,7 +235,7 @@ const Invoice = () => {
                                             <TableRow key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>
-                                                    {item.companyName} {item.productName}
+                                                    {item.companyName} {item.productName} - {item.code}
                                                 </TableCell>
                                                 <TableCell>{item.price} ₹</TableCell>
                                                 <TableCell>
